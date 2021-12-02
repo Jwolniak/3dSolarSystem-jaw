@@ -2,8 +2,6 @@ import './style.css'
 
 import * as THREE from 'three';
 
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-
 const scene = new THREE.Scene();
 
 //sets the camera up so that the entire page and all objects can be seen by the user
@@ -20,7 +18,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 //moves the camera along the z axis to get a better view of the shapes
 camera.position.setZ(30);
-
+camera.position.setX(-3);
+renderer.render(scene, camera);
 //creates a white light that will allow the objects to be visible
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(5,5,5);
@@ -41,17 +40,9 @@ function addStars(){
   scene.add(star);
 }
 
-//function that will render the scene and animate the objects on the canvas
-function animate(){
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
 
-  
-  //update the camera based on the change in position
-  controls.update();
-}
 //randomly places stars throughout the webpage
-Array(150).fill().forEach(addStar);
+Array(150).fill().forEach(addStars);
 
 //creates the background and applies the texture
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
@@ -105,8 +96,8 @@ const saturn = new THREE.Mesh(
   new THREE.MeshStandardMaterial({map: saturnTexture})
 );
 
-const urnasTexture = new THREE.TextureLoader().load('uranus.jpg');
-const urnaus = new THREE.Mesh(
+const uranusTexture = new THREE.TextureLoader().load('uranus.jpg');
+const uranus = new THREE.Mesh(
   new THREE.SphereGeometry(5, 32, 32),
   new THREE.MeshStandardMaterial({map: uranusTexture})
 );
@@ -123,8 +114,23 @@ const pluto = new THREE.Mesh(
   new THREE.MeshStandardMaterial({map: plutoTexture})
 );
 
+//adding the different objects to the scene so the user can see them
+scene.add(sun);
+//scene.add(mercury);
+//scene.add(venus);
+//scene.add(earth);
+//scene.add(moon);
+//scene.add(mars);
+//scene.add(jupiter);
+//scene.add(saturn);
+//scene.add(uranus);
+//scene.add(neptune);
+//scene.add(pluto);
+
+//setting object positions to make it appear as the user scrolls
 sun.position.z = 30;
 sun.position.setX(-10);
+
 //this function moves the camera so that the object looks as though it is moving while the user scrolls through the web page
 function moveCamera(){
   const t = document.body.getBoundingClientRect().top;
@@ -136,5 +142,25 @@ function moveCamera(){
   camera.position.x = t * -0.0002;
   camera.position.y = t * -0.0002;
 }
-
 document.body.onscroll = moveCamera;
+moveCamera();
+
+
+//function that will render the scene and animate the objects on the canvas
+function animate(){
+  requestAnimationFrame(animate);
+
+  sun.rotation.x += 0.005;
+  mercury.rotation.x += 0.005;
+  venus.rotation.x += 0.005;
+  earth.rotation.x += 0.005;
+  moon.rotation.x += 0.005;
+  mars.rotation.x += 0.005;
+  jupiter.rotation.x += 0.005;
+  saturn.rotation.x += 0.005;
+  uranus.rotation.x += 0.005;
+  neptune.rotation.x += 0.005;
+  pluto.rotation.x += 0.005;
+  renderer.render(scene, camera);
+}
+animate();
