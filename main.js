@@ -1,4 +1,4 @@
-import 'style.css'
+import 'style.css';
 
 import * as THREE from 'three';
 
@@ -27,8 +27,6 @@ pointLight.position.set(5,5,5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
-const controls = new OrbitControls(camera, renderer.domElement);
-
 //creates objects that will act as stars and randomly places them
 function addStars(){
   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
@@ -39,7 +37,6 @@ function addStars(){
   star.position.set(x, y, z);
   scene.add(star);
 }
-
 
 //randomly places stars throughout the webpage
 Array(150).fill().forEach(addStars);
